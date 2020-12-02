@@ -28,14 +28,14 @@ public class ReservasService
 	}
 
 
-  //  public Reservas salvar(Reservas reservas)
+    public Reservas salvar(Reservas reservas)
     {
-  //      return repository.salvar(reservas);
+        return repository.salvar(reservas);
     }
 
     public void removePorNumero(int numero)
     {
- //       repository.remove(getReservasPorNumero(numero));
+        repository.remove(getReservasPorNumero(numero));
     }
 
 

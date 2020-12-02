@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ClienteController 
 {
     @Autowired
-    private ClienteService service;
+    private ClienteService serviceCliente;
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getClientePorId(@PathVariable int id)
     {
-        Cliente cliente = service.getClientePorId(id);
+        Cliente cliente = serviceCliente.getClientePorId(id);
         return ResponseEntity.ok(cliente);
     }
 
@@ -36,8 +36,8 @@ public class ClienteController
                                            HttpServletRequest request,
                                            UriComponentsBuilder builder
                                            ) {
-         Cliente cliente = service.fromDTO(clienteDTO);
-         cliente = service.save(cliente);
+         Cliente cliente = serviceCliente.fromDTO(clienteDTO);
+         cliente = serviceCliente.save(cliente);
          UriComponents uriComponents = builder.path(request.getRequestURI()+"/"+cliente.getId()).build();
          return ResponseEntity.created(uriComponents.toUri()).build();
     }
