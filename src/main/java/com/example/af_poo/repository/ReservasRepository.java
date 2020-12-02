@@ -1,27 +1,29 @@
 package com.example.af_poo.repository;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import com.example.af_poo.model.Reservas;
+import com.example.af_poo.model.Veiculo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReservasRepository 
 {
-    private ArrayList<Reservas> reserva;
-    private int nextNumero = 1;
+    @Autowired
+    ClienteRepository clienteRepositorio;
 
-    public List<Reservas> getReservas()
-    {
-        return reserva;
-    }
+    @Autowired
+    VeiculoRepository veiculoRepositorio;
 
-    public Optional<Reservas> getReservasPorNumero( int numero)
+    private ArrayList<Reservas> reservas = new ArrayList<Reservas>();
+    private int proxCod = 1;
+
+    public Optional<Reservas> getReservaPorNumero(int numero)
     {
-        for( Reservas aux : reserva)
+        for(Reservas aux : reservas)
         {
             if(aux.getNumero() == numero)
             {
@@ -31,16 +33,34 @@ public class ReservasRepository
         return Optional.empty();
     }
 
-    public Reservas salvar(Reservas Reservas)
+    public Reservas salvar(Reservas reserva, int idCliente, int idVeiculo)
     {
-        Reservas.setNumero(nextNumero++);
-        reserva.add(reserva);
+        reserva.setNumero(proxCod++);
+        reserva.setCliente(clienteRepositorio.getClientePorId(idCliente).get());
+        reserva.setVeiculo(veiculoRepositorio.getVeiculoPorId(idVeiculo).get());
+        reservas.add(reserva);
         return reserva;
     }
-
-    public void remove(Reservas reserva) 
+    
+    public void remove(Veiculo veiculo)
     {
-        reservas.remove(reserva);
-	}
+        for ( Reservas aux : reservas)
+        {
+            if ( veiculo.getId() == aux.getVeiculo().getId())
+            {
+                reservas.remove(aux);
+            }
+        }
+    }
+
+    public ArrayList<Reservas> getReservas() 
+    {
+        return reservas;
+    }
+
+    public void setReservas(ArrayList<Reservas> reservas) 
+    {
+        this.reservas = reservas;
+    }
     
 }

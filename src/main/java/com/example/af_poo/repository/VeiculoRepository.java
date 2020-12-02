@@ -22,17 +22,9 @@ public class VeiculoRepository
         Veiculo c1 = new Veiculo();
         c1.setId(1);
         c1.setModelo("hb20");
-        c1.setValorDiaria("R$200,00");
+        c1.setValorDiaria(200);
 
         nextId = 2;
-    }
-
-    public Veiculo salvar(Veiculo veiculo)
-    {
-        veiculo.setId(nextId);
-       // veiculo.add(veiculo);
-        nextId++;
-        return veiculo;
     }
 
     public List<Veiculo> getTodosVeiculos()
@@ -63,9 +55,17 @@ public class VeiculoRepository
 
         if(aux != null)
         {
+            aux.setModelo(veiculo.getModelo());
             aux.setValorDiaria(veiculo.getValorDiaria());
         }
         return aux;
+    }
+
+    public Veiculo salvar(Veiculo veiculo)
+    {
+        veiculo.setId(nextId++);
+        veiculos.add(veiculo);
+        return veiculo;
     }
 
 }

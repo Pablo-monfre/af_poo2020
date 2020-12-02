@@ -2,14 +2,18 @@ package com.example.af_poo.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Reservas 
 {
     private int numero;
     private Cliente cliente;
     private Veiculo veiculo;
+    @JsonFormat(pattern = "dd/MM/yyyy@HH:mm")
     private LocalDateTime dataInicio;
-    private boolean dataFim;
-   // private double totalReserva;
+    @JsonFormat(pattern = "dd/MM/yyyy@HH:mm")
+    private LocalDateTime dataFim;
+    private double valorTotal;
     
     public int getNumero() 
     {
@@ -51,14 +55,24 @@ public class Reservas
         this.dataInicio = dataInicio;
     }
 
-    public boolean isDataFim() 
+    public LocalDateTime getDataFim() 
     {
         return dataFim;
     }
 
-    public void setDataFim(boolean dataFim) 
+    public void setDataFim(LocalDateTime dataFim) 
     {
         this.dataFim = dataFim;
+    }
+
+    public double getValorTotal()
+    {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal)
+    {
+        this.valorTotal = valorTotal;
     }
     
 

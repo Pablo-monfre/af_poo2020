@@ -3,10 +3,13 @@ package com.example.af_poo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import com.example.af_poo.dto.ReservasDTO;
 import com.example.af_poo.dto.VeiculoDTO;
 import com.example.af_poo.model.Veiculo;
-import com.example.af_poo.service.VeiculoServise;
+import com.example.af_poo.service.ReservasService;
+import com.example.af_poo.service.VeiculoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,35 +29,30 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class VeiculoController 
 {
     @Autowired
-    private VeiculoServise serviceVeiculo;
-    
-    @GetMapping
-    public List<Veiculo> getTodosVeiculos()
+    VeiculoService serviceVeiculo;
+
+    @Autowired
+    ReservasService serviceReservas;
+
+    @GetMapping()
+    public List<Veiculo> getVeiculos()
     {
-        return serviceVeiculo.getTodosVeiculos();
+        return  serviceVeiculo.getTodosVeiculos();
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Veiculo> getVeiculoPorId(@PathVariable int id)
     {
         Veiculo veiculo = serviceVeiculo.getVeiculoPorId(id);
         return ResponseEntity.ok(veiculo);
-    } 
-
-    @PostMapping
-    public ResponseEntity<Veiculo> getVeiculoPorId(@RequestBody VeiculoDTO veiculoDTO, HttpServletRequest request,
-            UriComponentsBuilder builder)
-    {
-        Veiculo veiculo = serviceVeiculo.fromDTO(veiculoDTO);
-        veiculo = serviceVeiculo.salvar(veiculo);
-        UriComponents uriComponents = builder.path(request.getRequestURI()+"/"+veiculo.getId()).build();
-        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remover(@PathVariable int id)
+    public ResponseEntity<Void> remove(@PathVariable int id)
     {
-
+        Veiculo veiculo = serviceVeiculo.getVeiculoPorId(id);
+        
+        serviceReservas.remove(veiculo);
         serviceVeiculo.removePorId(id);
         return ResponseEntity.noContent().build();
     }
@@ -66,6 +64,21 @@ public class VeiculoController
         veiculo.setId(id);
         veiculo = serviceVeiculo.atualizar(veiculo);
         return ResponseEntity.ok(veiculo);
+    }
 
+    @GetMapping("/{codigo}/reservas")
+    public List<ReservasDTO> getReservasCliente(@PathVariable int id)
+    {
+        Veiculo veiculo = serviceVeiculo.getVeiculoPorId(id);
+        return serviceReservas.toVeiculoListDTO(veiculo.getReservas());
+    }
+
+    @PostMapping()
+    public ResponseEntity<Veiculo> salvar(@Valid @RequestBody VeiculoDTO veiculoDTO, HttpServletRequest request, UriComponentsBuilder builder)
+    {
+        Veiculo veiculo = serviceVeiculo.fromDTO(veiculoDTO);
+        Veiculo novoVeiculo = serviceVeiculo.salvar(veiculo);
+        UriComponents uriComponents = builder.path(request.getRequestURI() + "/" + novoVeiculo.getId()).build();
+        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 }

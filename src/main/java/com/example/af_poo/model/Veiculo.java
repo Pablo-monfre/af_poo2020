@@ -1,10 +1,18 @@
 package com.example.af_poo.model;
 
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Veiculo 
 {
     private int id;
     private String modelo;
-    private String valorDiaria;
+    private Float valorDiaria;
+
+    @JsonIgnore
+	private ArrayList<Reservas> reservas = new ArrayList<Reservas>();
+
 
     public int getId() 
 	{
@@ -16,26 +24,45 @@ public class Veiculo
 		this.id = id;
     }
     
-    public String getModelo()
+    public String getModelo() 
     {
-        return modelo;
+		return modelo;
+	}
+
+    public void setModelo(String modelo) 
+    {
+		this.modelo = modelo;
+	}
+
+    public float getValorDiaria() 
+    {
+		return valorDiaria;
+	}
+
+    public void setValorDiaria(float valorDiaria) 
+    {
+		this.valorDiaria = valorDiaria;
+	}
+
+    public ArrayList<Reservas> getReservas() 
+    {
+		return reservas;
+	}
+
+    public void setReservas(ArrayList<Reservas> reservas) 
+    {
+		this.reservas = reservas;
+	}
+
+    public boolean addReserva(Reservas reserva)
+    {
+        return reservas.add(reserva);
     }
 
-    public void setModelo(String modelo)
+    public boolean removeReserva(Reservas reserva) 
     {
-        this.modelo = modelo;
+        return reservas.remove(reserva);
     }
-
-    public String getValorDiaria()
-    {
-        return valorDiaria;
-    }
-
-    public void setValorDiaria(String valorDiaria)
-    {
-        this.valorDiaria = valorDiaria;
-    }
-
 
     
 }

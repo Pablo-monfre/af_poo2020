@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
 public class ClienteRepository 
 {
     private List<Cliente> clientes;
-    private int nextId;
+    private int nextId = 0;
 
     @PostConstruct
-    public void init() {
-
+    public void init() 
+    {
         Cliente c1 = new Cliente();
         c1.setId(1);
-        c1.setNome("Jose");
-        c1.setEndereco("Rua X, 99");
-        c1.setCpf(1001232323);
+        c1.setNome("Pablo");
+        c1.setEndereco("Rua Avenida, 102");
+        c1.setCpf("23234543212");
 
         clientes = new ArrayList<Cliente>();
         clientes.add(c1);
@@ -31,7 +31,8 @@ public class ClienteRepository
         nextId = 2;
     }
 
-    public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente) 
+    {
         cliente.setId(nextId);
         clientes.add(cliente);
         nextId++;
@@ -39,32 +40,47 @@ public class ClienteRepository
 
     }
 
-    public List<Cliente> getClientes() {
+    public List<Cliente> getClientes() 
+    {
         return clientes;
     }
 
-    public Optional<Cliente> getClientePorId(int id) {
-        for (Cliente aux : clientes) {
-            if (aux.getId() == id) {
+    public Optional<Cliente> getClientePorId(int id) 
+    {
+        for (Cliente aux : clientes) 
+        {
+            if (aux.getId() == id) 
+            {
                 return Optional.of(aux);
             }
         }
         return Optional.empty();
     }
 
-	public void delete(Cliente cliente) {
+    public Cliente salvar(Cliente cliente)
+    {
+        cliente.setId(nextId++);
+        clientes.add(cliente);
+        return cliente;
+    }
+
+    public void remove(Cliente cliente) 
+    {
         clientes.remove(cliente);
 	}
 
-	public Cliente update(Cliente cliente) {
+    public Cliente update(Cliente cliente) 
+    {
         
         Cliente aux = getClientePorId(cliente.getId()).get();
 
-        if(aux != null){
-            aux.setEndereco(cliente.getEndereco());
+        if(aux != null)
+        {
             aux.setNome(cliente.getNome());
+            aux.setEndereco(cliente.getEndereco());
+            aux.setCpf(cliente.getCpf());
         }
-
+        
         return aux;
         
 	}

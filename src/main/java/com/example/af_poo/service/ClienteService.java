@@ -18,33 +18,38 @@ public class ClienteService
     @Autowired
     private ClienteRepository repository;
 
-    public Cliente fromDTO(ClienteDTO objDTO){
+	public Cliente fromDTO(ClienteDTO dto)
+	{
         Cliente cliente = new Cliente();
-        cliente.setEndereco(objDTO.getEndereco());
+        cliente.setNome(dto.getNome());
+        cliente.setEndereco(dto.getEndereco());
+        cliente.setCpf(dto.getCpf());
         return cliente;
     }
 
-	public List<Cliente> getClientes() {
+	public List<Cliente> getClientes() 
+	{
 		return repository.getClientes();
 	}
 
-	public Cliente getClientePorId(int id) {
+	public Cliente getClientePorId(int id) 
+	{
         Optional<Cliente> op = repository.getClientePorId(id);
         return op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não cadastrado!"));
 	}
 
-	public Cliente save(Cliente cliente) {
-      	return repository.save(cliente);
+	public Cliente salvar(Cliente cliente) 
+	{
+      	return repository.salvar(cliente);
 	}
 
-	public void removePorId(int id) {
-         repository.delete(getClientePorId(id)); 
+	public void removePorId(int id) 
+	{
+         repository.remove(getClientePorId(id)); 
 	}
 
-	public Cliente update(Cliente cliente) {
-        getClientePorId(cliente.getId()); //So para lancar o 404
-		return repository.update(cliente);
+	public List<Cliente> getTodosCliente() {
+		return null;
 	}
-    
 
 }

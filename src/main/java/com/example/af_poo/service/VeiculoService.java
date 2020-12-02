@@ -70,8 +70,7 @@ public class VeiculoService
         return repository.atualizar(veiculo);
     }
 
-    public Veiculo salvar(Veiculo veiculo)
-    {
+    public Veiculo salvar(Veiculo veiculo){
         return repository.salvar(veiculo);
     }
 
