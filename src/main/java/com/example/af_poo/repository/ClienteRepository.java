@@ -30,7 +30,7 @@ public class ClienteRepository
 
         nextId = 2;
     }
-
+	
     public Cliente save(Cliente cliente) 
     {
         cliente.setId(nextId);
@@ -40,7 +40,7 @@ public class ClienteRepository
 
     }
 
-    public List<Cliente> getClientes() 
+    public List<Cliente> getTodosClientes() 
     {
         return clientes;
     }
