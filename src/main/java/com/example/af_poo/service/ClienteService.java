@@ -49,7 +49,7 @@ public class ClienteService
 	}
 
 	public List<Cliente> getTodosCliente() {
-		return null;
+		return repository.getClientes();
 	}
 
 }
