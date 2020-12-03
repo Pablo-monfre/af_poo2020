@@ -66,7 +66,7 @@ public class VeiculoController
         return ResponseEntity.ok(veiculo);
     }
 
-    @GetMapping("/{codigo}/reservas")
+    @GetMapping("/{id}/reservas")
     public List<ReservasDTO> getReservasCliente(@PathVariable int id)
     {
         Veiculo veiculo = serviceVeiculo.getVeiculoPorId(id);
