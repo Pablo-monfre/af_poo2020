@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/Reservas")
+@RequestMapping("/reservas")
 public class ReservasController 
 {
     @Autowired
