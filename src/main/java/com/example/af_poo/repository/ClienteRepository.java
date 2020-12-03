@@ -40,7 +40,7 @@ public class ClienteRepository
 
     }
 
-    public List<Cliente> getTodosClientes() 
+    public List<Cliente> getClientes() 
     {
         return clientes;
     }
