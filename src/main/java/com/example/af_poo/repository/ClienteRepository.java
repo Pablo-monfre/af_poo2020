@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ClienteRepository 
 {
     private List<Cliente> clientes;
-    private int nextId = 1;
+    private int nextId = 0;
 
     @PostConstruct
     public void init() 
