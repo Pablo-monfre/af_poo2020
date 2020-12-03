@@ -48,8 +48,8 @@ public class ClienteService
          repository.remove(getClientePorId(id)); 
 	}
 
-	public List<Cliente> getClientes() {
-		return repository.getClientes();
+	public List<Cliente> getTodosCliente() {
+		return null;
 	}
 
 }
